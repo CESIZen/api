@@ -1,0 +1,17 @@
+meta {
+  name: Créer un rôle
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/roles
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Admin"
+  }
+}

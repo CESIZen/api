@@ -13,12 +13,75 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Il faudras ajouter le rôle id
-model user {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String?  @unique
-  password  String?
+model User {
+  id              Int              @id @default(autoincrement())
+  name            String
+  email           String           @unique
+  password        String
+  roleId          Int
+  role            Role             @relation(fields: [roleId], references: [id])
+  informations    Information[]
+  emotionTrackers EmotionTracker[]
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
+}
+
+model Information {
+  id         Int                   @id @default(autoincrement())
+  title      String
+  content    String
+  imageUrl   String
+  isActive   Boolean
+  userId     Int
+  user       User                  @relation(fields: [userId], references: [id])
+  categories InformationCategory[]
+}
+
+model Category {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  isActive     Boolean
+  color        String
+  informations InformationCategory[]
+}
+
+model InformationCategory {
+  id            Int         @id @default(autoincrement())
+  information   Information @relation(fields: [informationId], references: [id])
+  informationId Int
+  category      Category    @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+
+  @@unique([informationId, categoryId])
+}
+
+model EmotionType {
+  id       Int       @id @default(autoincrement())
+  name     String
+  color    String
+  emotions Emotion[]
+}
+
+model Emotion {
+  id              Int              @id @default(autoincrement())
+  name            String
+  color           String
+  emotionTypeId   Int
+  emotionType     EmotionType      @relation(fields: [emotionTypeId], references: [id])
+  emotionTrackers EmotionTracker[]
+}
+
+model EmotionTracker {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  emotionId Int
+  emotion   Emotion  @relation(fields: [emotionId], references: [id])
+  intensity Int
+  note      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

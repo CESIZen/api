@@ -1,0 +1,25 @@
+meta {
+  name: Connexion
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/api/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "user.test@gmail.com",
+    "password": "Password"
+  }
+}
+
+script:post-response {
+  let token = res.getBody()
+  if (token) {
+    bru.setVar('AccessToken',token.access_token)
+  }
+}

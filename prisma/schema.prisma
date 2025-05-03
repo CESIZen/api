@@ -20,14 +20,20 @@ model User {
   password        String
   roleId          Int
   role            Role             @relation(fields: [roleId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  deletedAt       DateTime?
   informations    Information[]
   emotionTrackers EmotionTracker[]
 }
 
 model Role {
-  id    Int    @id @default(autoincrement())
-  name  String
-  users User[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+  users     User[]
 }
 
 model Information {
@@ -38,6 +44,9 @@ model Information {
   isActive   Boolean
   userId     Int
   user       User                  @relation(fields: [userId], references: [id])
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @default(now()) @updatedAt
+  deletedAt  DateTime?
   categories InformationCategory[]
 }
 
@@ -46,6 +55,9 @@ model Category {
   name         String
   isActive     Boolean
   color        String
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now()) @updatedAt
+  deletedAt    DateTime?
   informations InformationCategory[]
 }
 
@@ -55,15 +67,21 @@ model InformationCategory {
   informationId Int
   category      Category    @relation(fields: [categoryId], references: [id])
   categoryId    Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+  deletedAt     DateTime?
 
   @@unique([informationId, categoryId])
 }
 
 model EmotionType {
-  id       Int       @id @default(autoincrement())
-  name     String
-  color    String
-  emotions Emotion[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  color     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+  emotions  Emotion[]
 }
 
 model Emotion {
@@ -72,16 +90,21 @@ model Emotion {
   color           String
   emotionTypeId   Int
   emotionType     EmotionType      @relation(fields: [emotionTypeId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  deletedAt       DateTime?
   emotionTrackers EmotionTracker[]
 }
 
 model EmotionTracker {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
   emotionId Int
-  emotion   Emotion  @relation(fields: [emotionId], references: [id])
+  emotion   Emotion   @relation(fields: [emotionId], references: [id])
   intensity Int
-  note      String
-  createdAt DateTime @default(now())
+  note      String    @default("")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
 }

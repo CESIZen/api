@@ -36,7 +36,7 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  async updateUser(userId: number, data: any) {
+  async updateUser(userId: number, data: User) {
     return this.prisma.user.update({
       where: { id: userId },
       data,

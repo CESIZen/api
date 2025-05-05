@@ -2,16 +2,17 @@ import {
   Controller,
   Get,
   Post,
-  Put,
   Delete,
   Param,
   Body,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { BadRequestException } from '@nestjs/common/exceptions';
 
 @Controller('users')
 export class UserController {
@@ -32,13 +33,21 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
-  @Put(':id')
-  async updateUser(@Param('id') userId: number, @Body() data: any) {
+  @Patch(':id')
+  async updateUser(@Param('id') id: string, @Body() data: any) {
+    const userId = parseInt(id, 10);
+    if (isNaN(userId)) {
+      throw new BadRequestException('Invalid user ID');
+    }
     return this.userService.updateUser(userId, data);
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') userId: number) {
+  async deleteUser(@Param('id') id: string) {
+    const userId = parseInt(id, 10);
+    if (isNaN(userId)) {
+      throw new BadRequestException('Invalid user ID');
+    }
     return this.userService.deleteUser(userId);
   }
 }

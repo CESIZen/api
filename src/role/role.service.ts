@@ -18,4 +18,17 @@ export class RoleService {
     id = Number(id);
     return this.prisma.role.findUnique({ where: { id } });
   }
+
+  async deleteRole(roleId: number) {
+    return this.prisma.role.delete({
+      where: { id: roleId },
+    });
+  }
+
+  async updateRole(roleId: number, data: CreateRoleDto) {
+    return this.prisma.role.update({
+      where: { id: roleId },
+      data,
+    });
+  }
 }

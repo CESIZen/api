@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
 import { InformationModule } from './information/information.module';
 import { UploadModule } from './upload/upload.module';
+import { EmotionTypeModule } from './emotion_type/emotion_type.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UploadModule } from './upload/upload.module';
     CategoryModule,
     InformationModule,
     UploadModule,
+    EmotionTypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

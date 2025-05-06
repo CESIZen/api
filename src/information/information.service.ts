@@ -72,6 +72,6 @@ export class InformationService {
     });
   }
   delete(id: number) {
-    return this.prisma.information.delete({ where: { id } });
+    return this.prisma.information.delete({ where: { id: Number(id) } });
   }
 }

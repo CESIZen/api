@@ -34,4 +34,6 @@ export class EmotionTypeService {
   delete(id: number) {
     return this.prisma.emotionType.delete({ where: { id: Number(id) } });
   }
+
+
 }

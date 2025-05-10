@@ -104,6 +104,7 @@ model EmotionTracker {
   emotion   Emotion   @relation(fields: [emotionId], references: [id])
   intensity Int
   note      String    @default("")
+  date      DateTime  @default(now())
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?

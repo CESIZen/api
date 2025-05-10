@@ -9,6 +9,7 @@ import { CategoryModule } from './category/category.module';
 import { InformationModule } from './information/information.module';
 import { UploadModule } from './upload/upload.module';
 import { EmotionTypeModule } from './emotion_type/emotion_type.module';
+import { EmotionTrackerModule } from './emotion_tracker/emotion_tracker.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EmotionTypeModule } from './emotion_type/emotion_type.module';
     InformationModule,
     UploadModule,
     EmotionTypeModule,
+    EmotionTrackerModule
   ],
   controllers: [AppController],
   providers: [AppService],

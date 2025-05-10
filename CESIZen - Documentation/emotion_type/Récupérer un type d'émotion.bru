@@ -1,0 +1,15 @@
+meta {
+  name: Récupérer un type d'émotion
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{BASE_URL}}/api/emotion_types/{{typeId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  typeId: 1
+}

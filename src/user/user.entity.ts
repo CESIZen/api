@@ -1,5 +1,4 @@
 export class User {
-  id: number;
   name: string;
   email: string;
   password: string;
@@ -7,6 +6,8 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;
+  resetToken?: string | null;
+
 
   constructor(data: Partial<User>) {
     Object.assign(this, data);

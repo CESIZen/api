@@ -8,12 +8,11 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
   async createUser(data: CreateUserDto): Promise<User> {
-    const hashedPassword: string = await bcrypt.hash(data.password, 10);
     const user = await this.prisma.user.create({
       data: {
         name: data.name,
         email: data.email,
-        password: hashedPassword,
+        password: data.password,
         roleId: data.roleId,
       },
     });
@@ -36,9 +35,12 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  async updateUser(userId: number, data: User) {
+  async updateUser(id: number, data: Partial<User>) {
+    if (data.password) {
+      data.password = await bcrypt.hash(data.password, 10);
+    }
     return this.prisma.user.update({
-      where: { id: userId },
+      where: { id },
       data,
     });
   }
@@ -46,6 +48,12 @@ export class UserService {
   async deleteUser(userId: number) {
     return this.prisma.user.delete({
       where: { id: userId },
+    });
+  }
+
+  async getUserByResetToken(token: string) {
+    return this.prisma.user.findFirst({
+      where: { resetToken: token },
     });
   }
 }

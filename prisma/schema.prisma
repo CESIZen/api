@@ -64,7 +64,7 @@ model Category {
 
 model InformationCategory {
   id            Int         @id @default(autoincrement())
-  information   Information @relation(fields: [informationId], references: [id])
+  information   Information @relation(fields: [informationId], references: [id], onDelete: Cascade)
   informationId Int
   category      Category    @relation(fields: [categoryId], references: [id])
   categoryId    Int

@@ -1,3 +1,4 @@
+// src/upload/upload.controller.ts
 import {
   Controller,
   Post,
@@ -6,10 +7,10 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { extname, join } from 'path';
 import { UploadService } from './upload.service';
 
-@Controller('uploads')
+@Controller('/uploads')
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
@@ -17,7 +18,7 @@ export class UploadController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './uploads',
+        destination: join(__dirname, '..', '..', 'uploads'),
         filename: (req, file, callback) => {
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           const ext = extname(file.originalname);
@@ -26,7 +27,7 @@ export class UploadController {
         },
       }),
       fileFilter: (req, file, callback) => {
-        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+        if (!file.mimetype.match(/^image\/(jpg|jpeg|png|gif)$/)) {
           return callback(
             new Error('Seuls les fichiers image sont autorisés !'),
             false,

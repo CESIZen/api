@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query } from '@nestjs/common';
 import { EmotionTrackerService } from './emotion_tracker.service';
 import { CreateEmotionTrackerDto } from './dto/create-emotion_tracker.dto';
 import { EmotionTracker } from './emotion_tracker.entity';
@@ -18,8 +18,8 @@ export class EmotionTrackerController {
   }
 
   @Get()
-  async getAll() {
-    return this.emotion_trackerService.getAll();
+  async getAll(@Query('userId') userId?: string) {
+    return this.emotion_trackerService.getAll(userId ? Number(userId) : undefined);
   }
 
   @Put(':id')

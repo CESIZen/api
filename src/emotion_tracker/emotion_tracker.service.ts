@@ -7,7 +7,10 @@ import {EmotionTracker} from "./emotion_tracker.entity";
 export class EmotionTrackerService {
   constructor(private prisma: PrismaService) {}
 
-  getAll() {
+  getAll(userId?: number) {
+    if (userId !== undefined) {
+      return this.prisma.emotionTracker.findMany({ where: { userId } });
+    }
     return this.prisma.emotionTracker.findMany();
   }
 

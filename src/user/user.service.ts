@@ -35,16 +35,12 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  async updateUser(id: number, data: Partial<User>) {
-    if (data.password) {
+  async updateUser(id: number, data: any) {
+    if (data.password && !data.password.startsWith('$2b$')) {
       data.password = await bcrypt.hash(data.password, 10);
     }
-    return this.prisma.user.update({
-      where: { id },
-      data,
-    });
+    return this.prisma.user.update({ where: { id }, data });
   }
-
   async deleteUser(userId: number) {
     return this.prisma.user.delete({
       where: { id: userId },

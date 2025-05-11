@@ -82,12 +82,19 @@ export class AuthService {
   }
 
   async resetPassword(token: string, newPassword: string) {
+    console.log('Nouveau mot de passe reçu pour reset:', newPassword);
     const user = await this.userService.getUserByResetToken(token);
+    console.log('Utilisateur pour reset:', user);
     if (!user) {
       return { message: 'Token invalide' };
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await this.userService.updateUser(user.id, { password: hashedPassword, resetToken: null });
+    console.log('Nouveau hash généré:', hashedPassword);
+    const updatedUser = await this.userService.updateUser(user.id, {
+      password: hashedPassword,
+      resetToken: null,
+    });
+    console.log('Utilisateur après update:', updatedUser);
     return { message: 'Mot de passe réinitialisé avec succès' };
   }
 }

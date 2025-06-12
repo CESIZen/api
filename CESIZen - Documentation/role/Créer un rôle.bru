@@ -1,0 +1,17 @@
+meta {
+  name: Créer un rôle
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/api/roles
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Visiteur Annonyme"
+  }
+}

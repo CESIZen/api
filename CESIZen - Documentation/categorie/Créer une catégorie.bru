@@ -1,0 +1,19 @@
+meta {
+  name: Créer une catégorie
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/api/categories
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Santé mentale",
+    "isActive": true,
+    "color": "blue"
+  }
+}

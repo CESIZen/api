@@ -1,0 +1,21 @@
+meta {
+  name: Créer une information
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/api/informations/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Exemple de titre",
+    "content": "Contenu de l'information",
+    "imageUrl": "http://example.com/image.jpg",
+    "isActive": true,
+    "userId": 1
+  }
+}

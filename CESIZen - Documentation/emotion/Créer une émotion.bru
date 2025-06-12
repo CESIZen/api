@@ -1,0 +1,19 @@
+meta {
+  name: Créer une émotion
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/api/emotions
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Joie",
+    "color": "#a5d6a7",
+    "emotionTypeId": 1
+  }
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Récupérer un role par son id
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/api/roles/{{userId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AccessToken}}
+}
+
+vars:pre-request {
+  userId: 1
+}

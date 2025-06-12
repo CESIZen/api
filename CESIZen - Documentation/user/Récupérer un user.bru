@@ -1,0 +1,15 @@
+meta {
+  name: Récupérer un user
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/api/users/{{userId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  userId: 1
+}

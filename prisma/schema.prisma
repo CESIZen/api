@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  name            String
+  email           String           @unique
+  password        String
+  roleId          Int
+  role            Role             @relation(fields: [roleId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  deletedAt       DateTime?
+  resetToken      String?
+  informations    Information[]
+  emotionTrackers EmotionTracker[]
+}
+
+model Role {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+  users     User[]
+}
+
+model Information {
+  id         Int                   @id @default(autoincrement())
+  title      String
+  content    String
+  imageUrl   String
+  isActive   Boolean
+  userId     Int
+  user       User                  @relation(fields: [userId], references: [id])
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @default(now()) @updatedAt
+  deletedAt  DateTime?
+  categories InformationCategory[]
+}
+
+model Category {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  isActive     Boolean
+  color        String
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now()) @updatedAt
+  deletedAt    DateTime?
+  informations InformationCategory[]
+}
+
+model InformationCategory {
+  id            Int         @id @default(autoincrement())
+  information   Information @relation(fields: [informationId], references: [id], onDelete: Cascade)
+  informationId Int
+  category      Category    @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+  deletedAt     DateTime?
+
+  @@unique([informationId, categoryId])
+}
+
+model EmotionType {
+  id        Int       @id @default(autoincrement())
+  name      String
+  color     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+  emotions  Emotion[]
+}
+
+model Emotion {
+  id              Int              @id @default(autoincrement())
+  name            String
+  color           String
+  emotionTypeId   Int
+  emotionType     EmotionType      @relation(fields: [emotionTypeId], references: [id])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  deletedAt       DateTime?
+  emotionTrackers EmotionTracker[]
+}
+
+model EmotionTracker {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  emotionId Int
+  emotion   Emotion   @relation(fields: [emotionId], references: [id])
+  intensity Int
+  note      String    @default("")
+  date      DateTime  @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+}

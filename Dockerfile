@@ -21,4 +21,5 @@ COPY docker/nest/entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint
 
 ENTRYPOINT [ "entrypoint" ]
-CMD ["node", "dist/main", "start:migrate:prod"]
+#CMD ["node", "dist/main", "start:migrate:prod"]
+CMD ["npm", "run", "start:migrate:prod"]

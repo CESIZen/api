@@ -8,6 +8,8 @@ services:
       - postgres
     ports:
       - "3000:3000"
+    volumes:
+      - .env:/app/.env
 
   adminer:
     image: adminer

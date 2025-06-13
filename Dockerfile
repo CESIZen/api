@@ -1,4 +1,4 @@
-FROM node:22-alpine3.22 as builder
+FROM node:22-alpine3.22 AS builder
 
 LABEL org.opencontainers.image.source=https://github.com/cesizen/api
 

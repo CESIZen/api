@@ -12,7 +12,10 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'http://ec2-18-204-77-83.compute-1.amazonaws.com',
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

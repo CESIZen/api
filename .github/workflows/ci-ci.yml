@@ -1,0 +1,23 @@
+name: Construction du workflow
+run-name: ${{ github.actor }} a lancé les actions GitHub 🚀
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🚀 Lancement des étapes de construction"
+      - name: Vérifier le code du dépôt
+        uses: actions/checkout@v4
+      - run: echo "🚀 Le code du dépôt a été cloné sur le serveur d'exécution."
+      - run: npm clean-install
+      - run: npm run build
+      - name: Enregistrer le cache (node_modules)
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+      - run: echo "🏁 Étapes de construction terminées"
+
+
+

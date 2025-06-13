@@ -10,7 +10,6 @@ echo "Lancement de l'entrypoint du conteneur NestJS"
 
 npm install
 npx prisma generate
-npx prisma migrate deploy
 
 #if ["$NODE_ENV" = "production"]; then
 # npx prisma generate

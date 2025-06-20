@@ -82,7 +82,7 @@ jobs:
       - name: Vérifier le code du dépôt
         uses: actions/checkout@v4
       - run: npm clean-install
-      - run: npm audit --audit-level=low || true
+      - run: npm audit --audit-level=moderate
       - run: echo "🏁 Étapes d'audit terminées"
 
 

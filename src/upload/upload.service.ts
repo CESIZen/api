@@ -5,7 +5,7 @@ import { existsSync, mkdirSync } from 'fs';
 @Injectable()
 export class UploadService {
   private readonly uploadPath = join(__dirname, '..', '..', 'uploads');
-  private readonly baseUrl = process.env.BACKEND_URL || 'http://localhost:3000';
+  private readonly baseUrl = process.env.BACKEND_URL || 'http://ec2-18-204-77-83.compute-1.amazonaws.com:3000';
 
   constructor() {
     this.ensureUploadDirectoryExists();

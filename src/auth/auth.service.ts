@@ -64,7 +64,7 @@ export class AuthService {
 
   async sendResetEmail(email: string, token: string) {
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // ou autre service SMTP
+      service: 'gmail',
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,

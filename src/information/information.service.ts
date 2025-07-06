@@ -62,7 +62,10 @@ export class InformationService {
         imageUrl: data.imageUrl,
         isActive: data.isActive,
         categories: {
-          set: (data.categoryIds || []).map((categoryId) => ({ id: categoryId })),
+          deleteMany: {},
+          create: (data.categoryIds || []).map((categoryId) => ({
+            category: { connect: { id: categoryId } },
+          })),
         },
       },
       include: { categories: true },
